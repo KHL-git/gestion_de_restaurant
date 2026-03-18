@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Menu - Restaurant Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">🍽️ Restaurant Manager</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Tableau de bord</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="clients.html">Clients</a></li>
+                <li><a href="sales.html">Ventes</a></li>
+                <li><a href="profile.html">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Gestion du Menu</h2>
+                <button class="btn btn-primary" data-modal="addDishModal">+ Nouveau plat</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="menu-search" placeholder="Rechercher un plat..." style="max-width: 300px;">
+            </div>
+            <div class="table-container">
+                <table id="menu-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Poulet rôti</td>
+                            <td>Plat principal</td>
+                            <td>18.50€</td>
+                            <td>25</td>
+                            <td>
+                                <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">🍽️</button>
+                                <button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;">🍽️</button>
+                            </td>
+                        </tr>
+                        <!-- Plus de lignes... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Ajout/Modification Plat -->
+    <div id="addDishModal" class="modal" data-refresh="menu-table">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Nouveau plat</h2>
+            <form data-action="menu" data-table="menu-table">
+                <div class="form-group">
+                    <label>Nom du plat</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Prix (€)</label>
+                    <input type="number" name="price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <select name="category" required>
+                        <option>Entrée</option>
+                        <option>Plat principal</option>
+                        <option>Dessert</option>
+                        <option>Boisson</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input type="number" name="stock" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <script>setupSearch('menu-table');</script>
+</body>
+</html>

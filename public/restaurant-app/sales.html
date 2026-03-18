@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Ventes - Restaurant Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">🍽️ Restaurant Manager</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Tableau de bord</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="clients.html">Clients</a></li>
+                <li><a href="sales.html">Ventes</a></li>
+                <li><a href="profile.html">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Gestion des Ventes</h2>
+                <button class="btn btn-success" data-modal="newSaleModal">+ Nouvelle vente</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="sales-search" placeholder="Rechercher une vente..." style="max-width: 300px;">
+            </div>
+            <div class="table-container">
+                <table id="sales-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client</th>
+                            <th>Plats</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#001</td>
+                            <td>Jean Dupont</td>
+                            <td>Poulet rôti x2</td>
+                            <td>€37.00</td>
+                            <td>2024-01-15</td>
+                            <td><span style="color: #56ab2f; font-weight: bold;">Payée</span></td>
+                            <td>
+                                <button class="btn btn-warning" style="padding: 5px 10px;">🍽️</button>
+                                <button class="btn btn-danger" style="padding: 5px 10px;">🍽️</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Nouvelle Vente -->
+    <div id="newSaleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Nouvelle vente</h2>
+            <form data-action="sale">
+                <div class="form-group">
+                    <label>Client</label>
+                    <select name="client" required>
+                        <option>Jean Dupont</option>
+                        <option>Marie Martin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Plats</label>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <select name="dish1" style="flex: 1;">
+                            <option>Poulet rôti - 18.50€</option>
+                            <option>Pizza - 15.00€</option>
+                        </select>
+                        <input type="number" name="qty1" placeholder="Qté" style="width: 80px;" value="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Total</label>
+                    <input type="number" name="total" step="0.01" readonly>
+                </div>
+                <button type="submit" class="btn btn-success">Enregistrer la vente</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <script>setupSearch('sales-table');</script>
+</body>
+</html>

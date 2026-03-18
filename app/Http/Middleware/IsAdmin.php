@@ -15,8 +15,12 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'admin') {
-            return $next($request);
+        if (auth()->check()) {
+            /** @var \Illuminate\Contracts\Auth\Authenticatable|null $user */
+            $user = auth()->user();
+            if ($user && $user->role === 'admin') {
+                return $next($request);
+            }
         }
         abort(403, 'Accès réservé aux administrateurs.');
     }
