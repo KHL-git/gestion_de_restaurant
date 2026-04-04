@@ -84,15 +84,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <select id="role" name="role" class="form-select form-select-lg bg-light border-0 rounded-3 @error('role') is-invalid @enderror">
-                    <option value="client" selected>Client</option>
-                    @if(empty($adminExists) || !$adminExists)
-                        <option value="admin">Administrateur</option>
-                    @endif
-                </select>
-                @error('role')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <div class="form-control form-control-lg bg-light border-0 rounded-3 text-muted">Compte client</div>
+                <div class="form-text">Les comptes administrateurs sont créés depuis l'espace d'administration.</div>
             </div>
             <button type="submit" class="btn btn-success w-100 fw-bold py-2 rounded-3" style="font-size:1.1rem;">Créer mon compte</button>
         </form>
