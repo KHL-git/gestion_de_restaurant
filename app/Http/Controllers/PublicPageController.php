@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Table;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -24,8 +25,12 @@ class PublicPageController extends Controller
         ]);
     }
 
-    public function dashboard(Request $request): View
+    public function dashboard(Request $request): View|RedirectResponse
     {
+        if ($request->user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
+
         $availableMenus = Menu::query()
             ->where('disponible', true)
             ->latest()

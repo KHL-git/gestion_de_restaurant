@@ -78,6 +78,18 @@ class User extends Authenticatable
         return $this->role === self::ROLE_ADMIN;
     }
 
+    public static function hasAdminAccount(): bool
+    {
+        return static::query()
+            ->where('role', self::ROLE_ADMIN)
+            ->exists();
+    }
+
+    public function homeRoute(): string
+    {
+        return $this->isAdmin() ? 'admin.dashboard' : 'dashboard';
+    }
+
     public static function roles(): array
     {
         return self::ROLES;

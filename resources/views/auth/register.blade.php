@@ -84,8 +84,21 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <div class="form-control form-control-lg bg-light border-0 rounded-3 text-muted">Compte client</div>
-                <div class="form-text">Les comptes administrateurs sont créés depuis l'espace d'administration.</div>
+                @if($canRegisterAdmin)
+                    <select id="role" class="form-select form-select-lg bg-light border-0 rounded-3 @error('role') is-invalid @enderror" name="role" required>
+                        @foreach(\App\Models\User::roles() as $value => $label)
+                            <option value="{{ $value }}" @selected(old('role', \App\Models\User::ROLE_ADMIN) === $value)>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-text">Aucun administrateur n'existe encore. Vous pouvez créer le premier compte admin ou un compte client.</div>
+                    @error('role')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                @else
+                    <input type="hidden" name="role" value="{{ old('role', \App\Models\User::ROLE_CLIENT) }}">
+                    <div class="form-control form-control-lg bg-light border-0 rounded-3 text-muted">Compte client</div>
+                    <div class="form-text">Les comptes administrateurs sont créés depuis l'espace d'administration.</div>
+                @endif
             </div>
             <button type="submit" class="btn btn-success w-100 fw-bold py-2 rounded-3" style="font-size:1.1rem;">Créer mon compte</button>
         </form>

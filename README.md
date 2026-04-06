@@ -71,7 +71,7 @@ Avant installation, verifier la presence de:
 
 - PHP 8.2 ou plus recent
 - Composer 2+
-- Node.js 20+ recommande
+- Node.js 20.19+ ou 22.12+ recommande
 - npm 10+ recommande
 - SQLite 3 ou un serveur MySQL/MariaDB si vous changez la configuration `.env`
 
@@ -177,6 +177,8 @@ Pour une compilation de production:
 ```bash
 npm run build
 ```
+
+Si Laravel affiche une erreur `Vite manifest not found`, cela signifie generalement que les assets front n'ont pas encore ete compiles. Lancez `npm run build` pour generer `public/build/manifest.json`, ou `npm run dev` si vous travaillez en mode developpement.
 
 ## Lancement du projet
 
