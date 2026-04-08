@@ -29,7 +29,7 @@
         .chart-toolbar .btn.active {
             background-color: var(--admin-accent);
             border-color: var(--admin-accent);
-            color: #fff;
+            color: #af9797;
         }
 
         .chart-stage {

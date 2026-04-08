@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papm6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --public-bg: #f4ede2;
@@ -95,8 +97,13 @@
         }
 
         .public-navbar {
-            position: sticky;
-            top: 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            margin: 0 auto;
+            border-radius: 0 0 28px 28px;
+            box-sizing: border-box;
             z-index: 30;
             display: grid;
             grid-template-columns: auto 1fr auto;
@@ -178,15 +185,20 @@
             border-radius: 999px;
             font-weight: 600;
             color: var(--public-muted);
-            transition: 0.2s ease;
+            transition: 0.2s cubic-bezier(.4,0,.2,1);
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .public-nav-link:hover,
         .public-nav-link.active {
-            background: #fff;
-            color: var(--public-text);
-            box-shadow: 0 10px 22px rgba(60, 45, 27, 0.08);
+            background: linear-gradient(90deg, #ffe5c2 0%, #e6f4ea 100%);
+            color: var(--public-accent-strong);
+            box-shadow: 0 10px 22px rgba(60, 45, 27, 0.10);
+            font-weight: 700;
+            transform: scale(1.07);
         }
 
         .public-nav-link.active::after {
@@ -195,9 +207,10 @@
             left: 14px;
             right: 14px;
             bottom: 6px;
-            height: 2px;
+            height: 3px;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--public-accent) 0%, var(--public-green) 100%);
+            box-shadow: 0 2px 8px var(--public-accent-soft);
         }
 
         .public-nav-actions {
@@ -285,10 +298,13 @@
             background: linear-gradient(135deg, var(--public-accent) 0%, #d8843b 100%);
             color: #fff;
             box-shadow: 0 16px 28px rgba(192, 99, 43, 0.25);
+            transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.18s;
         }
 
         .public-button:hover {
             background: linear-gradient(135deg, var(--public-accent-strong) 0%, var(--public-accent) 100%);
+            transform: scale(1.07);
+            box-shadow: 0 20px 32px rgba(192, 99, 43, 0.32);
         }
 
         .public-button-secondary {
@@ -533,15 +549,17 @@
 
             <div class="public-navbar-menu" id="publicNavbarMenu">
                 <div class="public-nav-links">
-                    <a href="{{ route('home') }}" class="public-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
-                    <a href="{{ route('menu.index') }}" class="public-nav-link {{ request()->routeIs('menu.index') ? 'active' : '' }}">Menu</a>
+                    <a href="{{ route('home') }}" class="public-nav-link {{ request()->routeIs('home') ? 'active' : '' }}"><i class="fa fa-home"></i>Accueil</a>
+                    <a href="{{ route('menu.index') }}" class="public-nav-link {{ request()->routeIs('menu.index') ? 'active' : '' }}"><i class="fa fa-utensils"></i>Menu</a>
                     @auth
-                        <a href="{{ route('dashboard') }}" class="public-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
-                        <a href="{{ route('orders.index') }}" class="public-nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">Commandes</a>
-                        <a href="{{ route('reservations.index') }}" class="public-nav-link {{ request()->routeIs('reservations.*') ? 'active' : '' }}">Reservations</a>
-                        <a href="{{ route('profile.edit') }}" class="public-nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">Profil</a>
+                        <a href="{{ route('dashboard') }}" class="public-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i class="fa fa-chart-line"></i>Dashboard</a>
+                        <a href="{{ route('orders.index') }}" class="public-nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}"><i class="fa fa-receipt"></i>Commandes</a>
+                        <a href="{{ route('reservations.index') }}" class="public-nav-link {{ request()->routeIs('reservations.*') ? 'active' : '' }}"><i class="fa fa-calendar-check"></i>Réservations</a>
+                        <a href="{{ route('profile.edit') }}" class="public-nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}"><i class="fa fa-user"></i>Profil</a>
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.dashboard') }}" class="public-nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}">Admin</a>
+                            <a href="{{ route('admin.dashboard') }}" class="public-nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}"><i class="fa fa-cogs"></i>Admin</a>
+                                            <a href="#contact" class="public-nav-link"><i class="fa fa-envelope"></i>Contact</a>
+                                            <a href="#about" class="public-nav-link"><i class="fa fa-info-circle"></i>À propos</a>
                         @endif
                     @endauth
                 </div>
@@ -561,9 +579,9 @@
                         <button type="submit" class="public-button-secondary">Déconnexion</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="public-button-secondary">Connexion</a>
+                    <a href="{{ route('login') }}" class="public-button-secondary"><i class="fa fa-sign-in-alt"></i>Connexion</a>
                     @if(Route::has('register'))
-                        <a href="{{ route('register') }}" class="public-button">Créer un compte</a>
+                        <a href="{{ route('register') }}" class="public-button"><i class="fa fa-user-plus"></i>Créer un compte</a>
                     @endif
                 @endauth
             </div>
@@ -574,24 +592,20 @@
         </main>
 
         <footer class="public-footer">
-            <div class="public-footer-copy">
-                <span class="public-eyebrow">Espace public</span>
-                <h2>Une interface client plus claire, plus stable et mieux reliée aux modules du restaurant.</h2>
-                <p>
-                    Le layout public regroupe désormais la navigation, les accès rapides et un habillage cohérent pour les vues menu, commandes, réservations et profil.
-                </p>
-            </div>
+            <!-- Bloc d'information supprimé à la demande de l'utilisateur -->
 
             <div class="public-footer-links">
-                <a href="{{ route('home') }}">Accueil</a>
-                <a href="{{ route('menu.index') }}">Carte</a>
+                <a href="{{ route('home') }}"><i class="fa fa-home"></i>Accueil</a>
+                <a href="{{ route('menu.index') }}"><i class="fa fa-utensils"></i>Carte</a>
                 @auth
-                    <a href="{{ route('orders.index') }}">Mes commandes</a>
-                    <a href="{{ route('reservations.index') }}">Mes reservations</a>
-                    <a href="{{ route('profile.edit') }}">Mon profil</a>
+                    <a href="{{ route('orders.index') }}"><i class="fa fa-receipt"></i>Mes commandes</a>
+                    <a href="{{ route('reservations.index') }}"><i class="fa fa-calendar-check"></i>Mes réservations</a>
+                    <a href="{{ route('profile.edit') }}"><i class="fa fa-user"></i>Mon profil</a>
                 @else
-                    <a href="{{ route('login') }}">Connexion</a>
+                    <a href="{{ route('login') }}"><i class="fa fa-sign-in-alt"></i>Connexion</a>
                 @endauth
+                <a href="#contact"><i class="fa fa-envelope"></i>Contact</a>
+                <a href="#about"><i class="fa fa-info-circle"></i>À propos</a>
             </div>
         </footer>
     </div>

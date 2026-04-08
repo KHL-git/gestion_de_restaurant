@@ -46,6 +46,7 @@
             position: sticky;
             top: 0;
             height: 100vh;
+            overflow-y: auto;
         }
 
         .admin-brand {
@@ -339,7 +340,6 @@
             <div class="admin-sidebar-footer">
                 <p class="name">{{ auth()->user()->name }}</p>
                 <p class="role">Administrateur</p>
-
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="btn btn-outline-light admin-logout">Se déconnecter</button>
@@ -348,6 +348,7 @@
         </aside>
 
         <div class="admin-content">
+
             <header class="admin-topbar">
                 <div>
                     <h1>@yield('admin_title', 'Administration')</h1>
